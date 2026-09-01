@@ -34,9 +34,9 @@ Para cada finding, explique:
 - Seções de página: `frontend/src/pages/NomeDaPagina/components/`
 - Mocks e helpers: `frontend/src/data/` (`cities.ts`, `categories.ts`, `jobs.ts`)
 - Cor primária: `blue-900`
-- Container: `container mx-auto max-w-6xl px-4`
+- Container: `page-container` (definido em `frontend/src/index.css`; layout fluido, max 100rem)
 - Package manager: **npm** (há `package-lock.json`)
-- Scripts existentes no frontend: `lint`, `build` (`build` já inclui `tsc -b`). Não existe `typecheck` nem `test` no `package.json`.
+- Scripts existentes no frontend: `lint`, `test`, `build` (`build` já inclui `tsc -b`). Não existe `typecheck` no `package.json` (o CI usa `npx tsc -b`).
 
 Não exigir pasta `features/`, camadas enterprise, nem backend neste momento.
 
@@ -90,9 +90,9 @@ Nunca pedir para colocar secrets no código. Credenciais de review devem viver e
 
 ## 9. Testes
 
-Ainda **não há** infraestrutura de testes (`vitest`/`jest` ausentes). Não bloquear o PR só por falta de testes.
+O frontend usa **Vitest** + Testing Library (`npm test` / `npm run test:watch`). Testes ficam colocalizados (`*.test.ts` / `*.test.tsx`).
 
-Pode **sugerir** testes quando a feature for relevante e a suíte existir no futuro.
+Não bloquear o PR só porque um arquivo novo não tem teste. Pode **sugerir** testes quando a mudança altera comportamento (filtros, busca, rotas, helpers em `data/`).
 
 ## 10. Git / PR
 
