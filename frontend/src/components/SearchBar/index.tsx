@@ -46,9 +46,9 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex w-full max-w-md flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm md:max-w-3xl md:flex-row md:items-center md:gap-0 md:p-2 md:pl-4"
+      className="flex w-full max-w-md min-w-0 flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm md:max-w-3xl md:flex-row md:items-center md:gap-0 md:p-2 md:pl-4"
     >
-      <label className="relative block md:min-w-0 md:flex-1">
+      <label className="relative block min-w-0 md:flex-1">
         <span className="sr-only">Cargo, empresa ou palavra-chave</span>
         <FiBriefcase
           className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 md:left-0"
@@ -68,7 +68,7 @@ const SearchBar = () => {
         aria-hidden="true"
       />
 
-      <div ref={cityDropdownRef} className="relative md:min-w-0 md:flex-1">
+      <div ref={cityDropdownRef} className="relative min-w-0 md:flex-1">
         <button
           type="button"
           aria-haspopup="listbox"
@@ -124,7 +124,7 @@ const SearchBar = () => {
 
       <button
         type="submit"
-        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-900 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-blue-900/80 md:ml-2 md:w-auto md:shrink-0 md:px-5"
+        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-900 py-3 text-sm font-medium whitespace-nowrap text-white transition-all duration-300 hover:bg-blue-900/80 md:ml-2 md:w-auto md:shrink-0 md:px-5"
       >
         <FiSearch className="h-4 w-4" aria-hidden="true" />
         Buscar Vagas

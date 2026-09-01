@@ -30,7 +30,7 @@ const JobCard = ({ job, variant = "featured" }: JobCardProps) => {
       <article className="rounded-xl border border-slate-200 bg-white p-4 md:p-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="text-lg font-bold text-blue-900">{job.title}</h3>
+            <h3 className="text-lg font-bold wrap-break-word text-blue-900">{job.title}</h3>
             <p className="mt-0.5 text-sm text-slate-600">{job.company}</p>
             <p className="mt-1 text-sm text-slate-500">
               {cityLabel} • {job.modality}
@@ -52,18 +52,18 @@ const JobCard = ({ job, variant = "featured" }: JobCardProps) => {
           ))}
         </ul>
 
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-slate-500">{formatPostedAt(job.postedAt)}</p>
           <div className="flex gap-2">
             <button
               type="button"
-              className="flex-1 cursor-pointer rounded-md border border-blue-900 px-4 py-2 text-sm font-medium text-blue-900 transition-all duration-300 hover:bg-blue-50 sm:flex-none"
+              className="flex-1 cursor-pointer rounded-md border border-blue-900 px-4 py-2 text-sm font-medium text-blue-900 transition-all duration-300 hover:bg-blue-50 md:flex-none"
             >
               Salvar
             </button>
             <button
               type="button"
-              className="flex-1 cursor-pointer rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-blue-900/80 sm:flex-none"
+              className="flex-1 cursor-pointer rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:bg-blue-900/80 md:flex-none"
             >
               Candidatar-se
             </button>
@@ -89,7 +89,7 @@ const JobCard = ({ job, variant = "featured" }: JobCardProps) => {
 
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-lg font-bold text-slate-900">{job.title}</h3>
+            <h3 className="text-lg font-bold wrap-break-word text-slate-900">{job.title}</h3>
             {showNewBadge && (
               <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800">
                 Nova

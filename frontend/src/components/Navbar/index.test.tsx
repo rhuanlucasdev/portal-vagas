@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -16,6 +16,22 @@ describe("Navbar", () => {
     expect(screen.getByRole("link", { name: "Empresas" })).not.toHaveAttribute(
       "aria-current",
     );
+  });
+
+  it("opens navigation and search in the compact menu", async () => {
+    const user = userEvent.setup();
+    renderWithRouter(<Navbar />);
+
+    await user.click(screen.getByRole("button", { name: "Abrir menu" }));
+
+    const menu = document.getElementById("mobile-nav");
+    expect(menu).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Fechar menu" })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
+    expect(within(menu!).getByRole("link", { name: "Vagas" })).toBeInTheDocument();
+    expect(within(menu!).getByRole("searchbox", { name: "Buscar vagas" })).toBeInTheDocument();
   });
 
   it("does not mark Vagas as active on the home page", () => {

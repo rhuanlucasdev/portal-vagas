@@ -21,7 +21,7 @@ const JobCardSkeleton = ({ variant = "featured" }: JobCardSkeletonProps) => {
           <div className={`h-5 w-20 ${pulse}`} />
           <div className={`h-5 w-28 ${pulse}`} />
         </div>
-        <div className="mt-4 flex items-center justify-between gap-3">
+        <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className={`h-4 w-32 ${pulse}`} />
           <div className="flex gap-2">
             <div className={`h-9 w-20 ${pulse}`} />

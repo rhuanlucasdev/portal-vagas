@@ -10,7 +10,7 @@ function Home() {
     <div>
       <Navbar />
       <Hero />
-      <section className="bg-slate-50 py-12">
+      <section className="bg-slate-50 py-8 md:py-10 lg:py-12">
         <div className="page-container">
           <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-8">
             <div className="min-w-0 flex-1">

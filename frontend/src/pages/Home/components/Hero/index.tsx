@@ -4,7 +4,7 @@ import SearchBar from "../../../../components/SearchBar";
 const Hero = () => {
   return (
     <section
-      className="relative border-b border-slate-200 bg-cover bg-center py-20"
+      className="relative border-b border-slate-200 bg-cover bg-center py-12 md:py-16 lg:py-20"
       style={{ backgroundImage: `url(${heroBg})` }}
     >
       <div
@@ -13,15 +13,15 @@ const Hero = () => {
       />
 
       <div className="page-container relative flex flex-col items-center justify-center text-center">
-        <h1 className="max-w-xl text-2xl font-bold text-slate-900">
+        <h1 className="max-w-xl text-2xl font-bold text-slate-900 md:text-3xl">
           Encontre uma oportunidade perto de você
         </h1>
-        <p className="mt-3 max-w-lg text-md text-slate-600">
+        <p className="mt-3 max-w-lg text-sm text-slate-600 md:text-base">
           Conectando talentos regionais às melhores empresas da região. Descubra
           sua próxima grande oportunidade hoje mesmo.
         </p>
 
-        <div className="mt-8 w-full flex justify-center">
+        <div className="mt-6 flex w-full justify-center md:mt-8">
           <SearchBar />
         </div>
       </div>
