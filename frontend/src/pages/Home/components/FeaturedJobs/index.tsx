@@ -2,10 +2,13 @@ import { FiArrowRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import JobCard from "../../../../components/JobCard";
+import JobCardSkeleton from "../../../../components/JobCard/Skeleton";
 import { getRecentJobs } from "../../../../data/jobs";
+import { useMockLoading } from "../../../../hooks/useMockLoading";
 
 const FeaturedJobs = () => {
   const featuredJobs = getRecentJobs(3);
+  const loading = useMockLoading("home");
 
   return (
     <div>
@@ -21,9 +24,11 @@ const FeaturedJobs = () => {
       </div>
 
       <div className="flex flex-col gap-4">
-        {featuredJobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))}
+        {loading
+          ? Array.from({ length: 3 }, (_, index) => (
+              <JobCardSkeleton key={index} />
+            ))
+          : featuredJobs.map((job) => <JobCard key={job.id} job={job} />)}
       </div>
     </div>
   );

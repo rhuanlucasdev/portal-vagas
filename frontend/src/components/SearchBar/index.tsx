@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FiBriefcase, FiChevronDown, FiMapPin, FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 import { cities, type City } from "../../data/cities";
 
 const SearchBar = () => {
+  const navigate = useNavigate();
   const [keyword, setKeyword] = useState("");
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [isCityOpen, setIsCityOpen] = useState(false);
@@ -33,6 +35,12 @@ const SearchBar = () => {
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const params = new URLSearchParams();
+    const term = keyword.trim();
+    if (term) params.set("q", term);
+    if (selectedCity) params.set("cidade", selectedCity.id);
+    const query = params.toString();
+    navigate(query ? `/vagas?${query}` : "/vagas");
   };
 
   return (
