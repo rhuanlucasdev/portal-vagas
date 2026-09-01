@@ -121,13 +121,36 @@ jobs:
         with:
           node-version: 22
 
-      - name: Run code review
+      - name: Publish CI status on the PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FRONTEND_LINT: ${{ needs.validate-frontend.outputs.lint || 'skipped' }}
           FRONTEND_TYPECHECK: ${{ needs.validate-frontend.outputs.typecheck || 'skipped' }}
           FRONTEND_TESTS: skipped
           FRONTEND_BUILD: ${{ needs.validate-frontend.outputs.build || 'skipped' }}
         run: node .github/scripts/code-review.mjs
+
+      - name: Request GitHub Copilot code review
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          REVIEWER="copilot-pull-request-reviewer[bot]"
+          API="repos/${{ github.repository }}/pulls/${PR_NUMBER}/requested_reviewers"
+
+          if [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "PR de fork: GITHUB_TOKEN não consegue solicitar reviewer. Pulando."
+            exit 0
+          fi
+
+          if [ "${{ github.event.action }}" = "synchronize" ]; then
+            gh api --method DELETE "$API" -f "reviewers[]=${REVIEWER}" || true
+          elif gh api "$API" --jq '.users[].login' 2>/dev/null | grep -Fxq "$REVIEWER"; then
+            echo "Copilot reviewer já está solicitado."
+            exit 0
+          fi
+
+          gh api --method POST "$API" -f "reviewers[]=${REVIEWER}" \
+            || echo "::warning::Não foi possível solicitar ${REVIEWER} (já solicitado, 422 ou sem permissão)."

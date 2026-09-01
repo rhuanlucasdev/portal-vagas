@@ -1,6 +1,8 @@
 # Automated Code Review
 
-Instruções para o agente de Code Review em Pull Requests do **VagaSul**.
+Instruções para o **GitHub Copilot code review** (e para quem revisar o PR) no **VagaSul**.
+
+O workflow pede o Copilot como reviewer (`copilot-pull-request-reviewer[bot]`). As regras abaixo também estão resumidas em `.github/copilot-instructions.md`.
 
 O VagaSul é um portal de vagas regional (estudo full stack). O frontend atual está em `frontend/` (React 19, Vite, TypeScript, Tailwind v4, React Router, react-icons). Os dados ainda são mocks em `frontend/src/data/`. O backend NestJS/MongoDB ainda não existe.
 
