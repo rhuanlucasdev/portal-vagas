@@ -12,7 +12,7 @@ const links = [
 const Footer = () => {
   return (
     <footer className="bg-zinc-900 text-white">
-      <div className="container mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-8 md:flex-row md:justify-between">
+      <div className="page-container flex flex-col items-center gap-6 py-8 md:flex-row md:justify-between">
         <Link to="/" className="text-xl font-bold">
           VagaSul
         </Link>

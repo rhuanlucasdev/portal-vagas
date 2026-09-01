@@ -397,3 +397,38 @@ export function getRecentJobs(count = 3): Job[] {
 export function getJobCountByCategory(categoryId: CategoryId): number {
   return jobs.filter((job) => job.categoryId === categoryId).length;
 }
+
+export type JobFilters = {
+  query?: string;
+  cityId?: CityId;
+  categoryIds?: CategoryId[];
+};
+
+export function filterJobs(filters: JobFilters): Job[] {
+  const query = filters.query?.trim().toLowerCase() ?? "";
+
+  return jobs
+    .filter((job) => {
+      if (filters.cityId && job.cityId !== filters.cityId) return false;
+      if (filters.categoryIds?.length && !filters.categoryIds.includes(job.categoryId)) {
+        return false;
+      }
+      if (query) {
+        const haystack = `${job.title} ${job.company} ${job.description}`.toLowerCase();
+        if (!haystack.includes(query)) return false;
+      }
+      return true;
+    })
+    .sort((a, b) => b.postedAt.localeCompare(a.postedAt));
+}
+
+export function formatPostedAt(postedAt: string, now = new Date()): string {
+  const posted = new Date(`${postedAt}T00:00:00`);
+  const diffDays = Math.floor(
+    (now.getTime() - posted.getTime()) / (1000 * 60 * 60 * 24),
+  );
+
+  if (diffDays <= 0) return "Publicada hoje";
+  if (diffDays === 1) return "Publicada há 1 dia";
+  return `Publicada há ${diffDays} dias`;
+}

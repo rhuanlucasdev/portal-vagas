@@ -8,3 +8,7 @@ export const cities = [
 
 export type City = (typeof cities)[number];
 export type CityId = City["id"];
+
+export function isCityId(value: string): value is CityId {
+  return cities.some((city) => city.id === value);
+}
