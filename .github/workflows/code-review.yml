@@ -1,0 +1,133 @@
+name: Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [develop, main]
+  workflow_dispatch:
+
+concurrency:
+  group: code-review-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  detect-changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Filter paths
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+
+  validate-frontend:
+    name: Validate frontend
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    outputs:
+      lint: ${{ steps.lint.outcome }}
+      typecheck: ${{ steps.typecheck.outcome }}
+      tests: skipped
+      build: ${{ steps.build.outcome }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        id: lint
+        continue-on-error: true
+        run: npm run lint
+
+      - name: Typecheck
+        id: typecheck
+        continue-on-error: true
+        run: npx tsc -b --pretty false
+
+      - name: Tests
+        run: echo "Nenhum script de teste no package.json do frontend. Pulando."
+
+      - name: Build
+        id: build
+        continue-on-error: true
+        run: npx vite build
+
+      - name: Fail job if lint, typecheck or build failed
+        if: steps.lint.outcome == 'failure' || steps.typecheck.outcome == 'failure' || steps.build.outcome == 'failure'
+        run: exit 1
+
+  validate-backend:
+    name: Validate backend
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Skip until NestJS exists
+        run: |
+          if [ ! -f backend/package.json ]; then
+            echo "backend/package.json ausente. Nada a validar ainda."
+            exit 0
+          fi
+          echo "Quando o backend existir, adicionar npm ci / lint / test / build neste job."
+
+  code-review:
+    name: Publish review
+    needs: [detect-changes, validate-frontend]
+    if: always() && !cancelled() && needs.detect-changes.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run code review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FRONTEND_LINT: ${{ needs.validate-frontend.outputs.lint || 'skipped' }}
+          FRONTEND_TYPECHECK: ${{ needs.validate-frontend.outputs.typecheck || 'skipped' }}
+          FRONTEND_TESTS: skipped
+          FRONTEND_BUILD: ${{ needs.validate-frontend.outputs.build || 'skipped' }}
+        run: node .github/scripts/code-review.mjs
