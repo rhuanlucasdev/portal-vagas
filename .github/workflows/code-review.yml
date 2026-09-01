@@ -147,14 +147,10 @@ jobs:
 
           if [ "${{ github.event.action }}" = "synchronize" ]; then
             gh api --method DELETE "$API" -f "reviewers[]=${REVIEWER}" || true
-          fi
-
-<<<<<<< HEAD
-          if gh api "$API" --jq '.users[].login' 2>/dev/null | grep -Fxq "$REVIEWER"; then
+          elif gh api "$API" --jq '.users[].login' 2>/dev/null | grep -Fxq "$REVIEWER"; then
             echo "Copilot reviewer já está solicitado."
             exit 0
           fi
 
-          gh api --method POST "$API" -f "reviewers[]=${REVIEWER}" || {
-            echo "::warning::Não foi possível solicitar o reviewer do Copilot neste contexto (ex.: fork/permissão)."
-          }
+          gh api --method POST "$API" -f "reviewers[]=${REVIEWER}" \
+            || echo "::warning::Não foi possível solicitar ${REVIEWER} (já solicitado, 422 ou sem permissão)."
