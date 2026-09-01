@@ -140,8 +140,14 @@ jobs:
           REVIEWER="copilot-pull-request-reviewer[bot]"
           API="repos/${{ github.repository }}/pulls/${PR_NUMBER}/requested_reviewers"
 
+          if [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "PR de fork: GITHUB_TOKEN não consegue solicitar reviewer. Pulando."
+            exit 0
+          fi
+
           if [ "${{ github.event.action }}" = "synchronize" ]; then
             gh api --method DELETE "$API" -f "reviewers[]=${REVIEWER}" || true
           fi
 
-          gh api --method POST "$API" -f "reviewers[]=${REVIEWER}"
+          gh api --method POST "$API" -f "reviewers[]=${REVIEWER}" \
+            || echo "Não foi possível solicitar ${REVIEWER} (já solicitado, 422 ou sem permissão)."
