@@ -12,7 +12,7 @@ const links = [
 const Footer = () => {
   return (
     <footer className="bg-zinc-900 text-white">
-      <div className="page-container flex flex-col items-center gap-6 py-8 md:flex-row md:justify-between">
+      <div className="page-container flex flex-col items-center gap-6 py-8 lg:flex-row lg:justify-between">
         <Link to="/" className="text-xl font-bold">
           VagaSul
         </Link>
@@ -29,7 +29,7 @@ const Footer = () => {
           ))}
         </nav>
 
-        <p className="text-center text-sm text-zinc-400 md:text-right">
+        <p className="text-center text-sm text-zinc-400 lg:text-right">
           © {new Date().getFullYear()} VagaSul - Conectando talentos regionais.
         </p>
       </div>

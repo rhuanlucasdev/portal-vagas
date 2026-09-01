@@ -173,15 +173,15 @@ function Jobs() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
-      <main className="flex-1 bg-slate-50 py-8">
+      <main className="flex-1 bg-slate-50 py-6 md:py-8">
         <div className="page-container">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
             <div className="hidden w-full max-w-xs shrink-0 lg:block">{filters}</div>
 
             <div className="min-w-0 flex-1">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h1 className="text-2xl font-bold text-slate-900">{heading}</h1>
+              <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div className="min-w-0">
+                  <h1 className="text-xl font-bold wrap-break-word text-slate-900 md:text-2xl">{heading}</h1>
                   <p className="mt-1 text-sm text-slate-500">
                     {loading
                       ? "Carregando vagas..."
@@ -193,7 +193,7 @@ function Jobs() {
                   </p>
                 </div>
 
-                <form onSubmit={handleSearch} className="flex w-full gap-2 sm:max-w-sm">
+                <form onSubmit={handleSearch} className="flex w-full min-w-0 gap-2 md:max-w-sm">
                   <label className="relative min-w-0 flex-1">
                     <span className="sr-only">Buscar cargo</span>
                     <FiSearch
@@ -238,13 +238,13 @@ function Jobs() {
               {!loading && filtered.length > 0 && (
                 <nav
                   aria-label="Paginação"
-                  className="mt-8 flex items-center justify-center gap-2"
+                  className="mt-8 flex flex-wrap items-center justify-center gap-1 md:gap-2"
                 >
                   <button
                     type="button"
                     onClick={() => goToPage(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="flex size-9 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 disabled:cursor-not-allowed disabled:opacity-40 md:size-10"
                     aria-label="Página anterior"
                   >
                     <FiChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -256,7 +256,7 @@ function Jobs() {
                         type="button"
                         onClick={() => goToPage(pageNumber)}
                         aria-current={pageNumber === currentPage ? "page" : undefined}
-                        className={`size-10 cursor-pointer rounded-lg text-sm font-medium ${
+                        className={`size-9 cursor-pointer rounded-lg text-sm font-medium md:size-10 ${
                           pageNumber === currentPage
                             ? "bg-blue-900 text-white"
                             : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
@@ -270,7 +270,7 @@ function Jobs() {
                     type="button"
                     onClick={() => goToPage(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="flex size-9 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 disabled:cursor-not-allowed disabled:opacity-40 md:size-10"
                     aria-label="Próxima página"
                   >
                     <FiChevronRight className="h-5 w-5" aria-hidden="true" />
@@ -284,7 +284,7 @@ function Jobs() {
 
       {filtersMounted && (
         <div
-          className={`fixed inset-0 z-40 w-full overflow-y-auto bg-white transition-transform duration-300 ease-out lg:hidden ${
+          className={`fixed inset-0 z-60 w-full overflow-y-auto bg-white transition-transform duration-300 ease-out lg:hidden ${
             filtersEntered ? "translate-x-0" : "translate-x-full"
           }`}
           role="dialog"
