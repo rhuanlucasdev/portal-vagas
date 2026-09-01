@@ -12,7 +12,7 @@ const Hero = () => {
         aria-hidden="true"
       />
 
-      <div className="relative container mx-auto flex flex-col items-center justify-center px-4 text-center">
+      <div className="page-container relative flex flex-col items-center justify-center text-center">
         <h1 className="max-w-xl text-2xl font-bold text-slate-900">
           Encontre uma oportunidade perto de você
         </h1>
