@@ -410,11 +410,15 @@ export function filterJobs(filters: JobFilters): Job[] {
   return jobs
     .filter((job) => {
       if (filters.cityId && job.cityId !== filters.cityId) return false;
-      if (filters.categoryIds?.length && !filters.categoryIds.includes(job.categoryId)) {
+      if (
+        filters.categoryIds?.length &&
+        !filters.categoryIds.includes(job.categoryId)
+      ) {
         return false;
       }
       if (query) {
-        const haystack = `${job.title} ${job.company} ${job.description}`.toLowerCase();
+        const haystack =
+          `${job.title} ${job.company} ${job.description}`.toLowerCase();
         if (!haystack.includes(query)) return false;
       }
       return true;
@@ -431,4 +435,15 @@ export function formatPostedAt(postedAt: string, now = new Date()): string {
   if (diffDays <= 0) return "Publicada hoje";
   if (diffDays === 1) return "Publicada há 1 dia";
   return `Publicada há ${diffDays} dias`;
+}
+
+export function getJobById(id: string) {
+  if (!id) return undefined;
+  return jobs.find((job) => job.id === id);
+}
+
+export function getSimilarJobs(job: Job, count: number): Job[] {
+  return filterJobs({ categoryIds: [job.categoryId] })
+    .filter((j) => j.id !== job.id)
+    .slice(0, count);
 }

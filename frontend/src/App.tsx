@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Jobs from "./pages/Jobs";
-// import JobDetails from "./pages/JobDetails";
+import JobDetails from "./pages/JobDetails";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/vagas" element={<Jobs />} />
-        {/* <Route path="/vagas/:id" element={<JobDetails />} /> */}
+        <Route path="/vagas/:id" element={<JobDetails />} />
       </Routes>
     </BrowserRouter>
   );
