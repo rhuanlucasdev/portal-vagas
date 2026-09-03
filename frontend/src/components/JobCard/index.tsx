@@ -7,6 +7,7 @@ import {
   type Job,
 } from "../../data/jobs";
 import { Link } from "react-router-dom";
+import { CiBookmark } from "react-icons/ci";
 
 function getCompanyInitials(company: string) {
   const initials = company
@@ -71,7 +72,7 @@ const JobCard = ({ job, variant = "featured" }: JobCardProps) => {
               type="button"
               className="flex-1 cursor-pointer rounded-md border border-blue-900 px-4 py-2 text-sm font-medium text-blue-900 transition-all duration-300 hover:bg-blue-50 md:flex-none"
             >
-              Salvar
+              <CiBookmark className="w-5 h-5" aria-hidden="true" />
             </button>
             <Link
               to={`/vagas/${job.id}`}
