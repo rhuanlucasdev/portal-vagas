@@ -16,6 +16,7 @@ export type Job = {
   salary: string;
   description: string;
   requirements: string[];
+  benefits: string[];
   postedAt: string;
 };
 
@@ -37,6 +38,12 @@ export const jobs: Job[] = [
       "Leitura de projetos e medidas",
       "Disponibilidade para trabalhar em escala comercial",
     ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Seguro de vida",
+    ],
     postedAt: "2026-08-28",
   },
   {
@@ -55,6 +62,12 @@ export const jobs: Job[] = [
       "CNH categoria B",
       "Experiência em vendas externas",
       "Boa comunicação e organização de rota",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Comissão",
+      "Plano de saúde",
     ],
     postedAt: "2026-08-25",
   },
@@ -75,6 +88,12 @@ export const jobs: Job[] = [
       "Pacote Office básico",
       "Organização e atenção a detalhes",
     ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Plano odontológico",
+    ],
     postedAt: "2026-08-20",
   },
   {
@@ -93,6 +112,12 @@ export const jobs: Job[] = [
       "Graduação em Enfermagem e registro no COREN",
       "Disponibilidade para plantões 12x36",
       "Experiência em ambiente hospitalar (desejável)",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Plano de saúde",
+      "Plano odontológico",
+      "Adicional noturno",
     ],
     postedAt: "2026-08-30",
   },
@@ -113,6 +138,7 @@ export const jobs: Job[] = [
       "Experiência com controle de estoque e expedição",
       "Excel intermediário",
     ],
+    benefits: ["Vale-alimentação", "Vale-transporte", "Plano de saúde", "PLR"],
     postedAt: "2026-08-27",
   },
   {
@@ -131,6 +157,12 @@ export const jobs: Job[] = [
       "Ensino médio completo",
       "Experiência em varejo (desejável)",
       "Disponibilidade para sábados e feriados",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Comissão",
+      "Desconto em produtos",
     ],
     postedAt: "2026-08-22",
   },
@@ -151,6 +183,12 @@ export const jobs: Job[] = [
       "Conhecimento da CLT",
       "Boa comunicação e sigilo",
     ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Plano odontológico",
+    ],
     postedAt: "2026-08-18",
   },
   {
@@ -169,6 +207,13 @@ export const jobs: Job[] = [
       "Conhecimento em HTML, CSS, JavaScript e React",
       "Git na rotina de trabalho",
       "Vontade de aprender e comunicar bem com o time",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Plano odontológico",
+      "Auxílio home office",
     ],
     postedAt: "2026-08-29",
   },
@@ -189,6 +234,12 @@ export const jobs: Job[] = [
       "Conhecimento básico de circuitos e normas",
       "Disponibilidade de 30h semanais",
     ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Seguro de vida",
+      "Auxílio educação",
+    ],
     postedAt: "2026-08-26",
   },
   {
@@ -207,6 +258,12 @@ export const jobs: Job[] = [
       "Licenciatura em Matemática",
       "Experiência em sala de aula (desejável)",
       "Disponibilidade no período da tarde",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Bolsa de estudos",
     ],
     postedAt: "2026-08-21",
   },
@@ -227,6 +284,12 @@ export const jobs: Job[] = [
       "Experiência com manutenção industrial",
       "Disponibilidade para turnos",
     ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Adicional de periculosidade",
+    ],
     postedAt: "2026-08-16",
   },
   {
@@ -245,6 +308,12 @@ export const jobs: Job[] = [
       "Ensino médio completo",
       "Boa comunicação e cordialidade",
       "Disponibilidade para finais de semana e feriados",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Gorjetas",
     ],
     postedAt: "2026-08-24",
   },
@@ -265,6 +334,7 @@ export const jobs: Job[] = [
       "Bom condicionamento físico",
       "Conhecimento da região da Mantiqueira",
     ],
+    benefits: ["Alimentação", "Transporte", "Seguro de vida"],
     postedAt: "2026-08-19",
   },
   {
@@ -283,6 +353,12 @@ export const jobs: Job[] = [
       "Experiência em cozinha profissional",
       "Higiene e organização da estação",
       "Disponibilidade para almoço e jantar aos fins de semana",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Gorjetas",
     ],
     postedAt: "2026-08-15",
   },
@@ -303,6 +379,7 @@ export const jobs: Job[] = [
       "Disponibilidade para começar cedo",
       "CNH categoria B (desejável)",
     ],
+    benefits: ["Cesta básica", "Transporte", "Alojamento", "Vale-alimentação"],
     postedAt: "2026-08-23",
   },
   {
@@ -321,6 +398,12 @@ export const jobs: Job[] = [
       "Ensino médio completo",
       "Curso de atendente de farmácia (desejável)",
       "Simpatia no atendimento ao público",
+    ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Desconto em medicamentos",
     ],
     postedAt: "2026-08-17",
   },
@@ -341,6 +424,12 @@ export const jobs: Job[] = [
       "Experiência com entregas",
       "Conhecimento da região",
     ],
+    benefits: [
+      "Vale-alimentação",
+      "Vale-transporte",
+      "Plano de saúde",
+      "Seguro de vida",
+    ],
     postedAt: "2026-08-12",
   },
   {
@@ -359,6 +448,12 @@ export const jobs: Job[] = [
       "Superior em Computação, Sistemas de Informação ou afins",
       "Experiência com APIs e banco de dados",
       "Boa comunicação com áreas de negócio",
+    ],
+    benefits: [
+      "Plano de saúde",
+      "Plano odontológico",
+      "Plano de visão",
+      "Auxílio home office",
     ],
     postedAt: "2026-08-31",
   },
@@ -446,4 +541,16 @@ export function getSimilarJobs(job: Job, count: number): Job[] {
   return filterJobs({ categoryIds: [job.categoryId] })
     .filter((j) => j.id !== job.id)
     .slice(0, count);
+}
+
+export function getCompanyInitials(company: string) {
+  const initials = company
+    .split(" ")
+    .filter((word) => word.length > 2)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+
+  return initials || company.slice(0, 2).toUpperCase();
 }
