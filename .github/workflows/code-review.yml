@@ -49,7 +49,7 @@ jobs:
     outputs:
       lint: ${{ steps.lint.outcome }}
       typecheck: ${{ steps.typecheck.outcome }}
-      tests: skipped
+      tests: ${{ steps.tests.outcome }}
       build: ${{ steps.build.outcome }}
     steps:
       - name: Checkout
@@ -76,15 +76,17 @@ jobs:
         run: npx tsc -b --pretty false
 
       - name: Tests
-        run: echo "Nenhum script de teste no package.json do frontend. Pulando."
+        id: tests
+        continue-on-error: true
+        run: npm test
 
       - name: Build
         id: build
         continue-on-error: true
         run: npx vite build
 
-      - name: Fail job if lint, typecheck or build failed
-        if: steps.lint.outcome == 'failure' || steps.typecheck.outcome == 'failure' || steps.build.outcome == 'failure'
+      - name: Fail job if lint, typecheck, tests or build failed
+        if: steps.lint.outcome == 'failure' || steps.typecheck.outcome == 'failure' || steps.tests.outcome == 'failure' || steps.build.outcome == 'failure'
         run: exit 1
 
   validate-backend:
@@ -126,7 +128,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FRONTEND_LINT: ${{ needs.validate-frontend.outputs.lint || 'skipped' }}
           FRONTEND_TYPECHECK: ${{ needs.validate-frontend.outputs.typecheck || 'skipped' }}
-          FRONTEND_TESTS: skipped
+          FRONTEND_TESTS: ${{ needs.validate-frontend.outputs.tests || 'skipped' }}
           FRONTEND_BUILD: ${{ needs.validate-frontend.outputs.build || 'skipped' }}
         run: node .github/scripts/code-review.mjs
 
@@ -140,8 +142,17 @@ jobs:
           REVIEWER="copilot-pull-request-reviewer[bot]"
           API="repos/${{ github.repository }}/pulls/${PR_NUMBER}/requested_reviewers"
 
-          if [ "${{ github.event.action }}" = "synchronize" ]; then
-            gh api --method DELETE "$API" -f "reviewers[]=${REVIEWER}" || true
+          if [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "PR de fork: GITHUB_TOKEN não consegue solicitar reviewer. Pulando."
+            exit 0
           fi
 
-          gh api --method POST "$API" -f "reviewers[]=${REVIEWER}"
+          if [ "${{ github.event.action }}" = "synchronize" ]; then
+            gh api --method DELETE "$API" -f "reviewers[]=${REVIEWER}" || true
+          elif gh api "$API" --jq '.users[].login' 2>/dev/null | grep -Fxq "$REVIEWER"; then
+            echo "Copilot reviewer já está solicitado."
+            exit 0
+          fi
+
+          gh api --method POST "$API" -f "reviewers[]=${REVIEWER}" \
+            || echo "::warning::Não foi possível solicitar ${REVIEWER} (já solicitado, 422 ou sem permissão)."

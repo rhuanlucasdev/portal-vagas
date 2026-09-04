@@ -28,12 +28,14 @@ const ci = {
   build: process.env.FRONTEND_BUILD ?? "skipped",
 };
 
-const ciFailed = ["lint", "typecheck", "build"].some((key) => ci[key] === "failure");
+const CHECKS = ["lint", "typecheck", "tests", "build"];
+
+const ciFailed = CHECKS.some((key) => ci[key] === "failure");
 
 await upsertComment(buildComment());
 
 if (ciFailed) {
-  console.error("CI falhou (lint, typecheck ou build).");
+  console.error("CI falhou (lint, typecheck, tests ou build).");
   process.exit(1);
 }
 
@@ -48,7 +50,9 @@ function requiredEnv(name) {
 function statusLine(label, outcome) {
   if (outcome === "success") return `✅ ${label}`;
   if (outcome === "failure") return `❌ ${label}`;
-  return `⏭️ ${label} (skipped)`;
+  if (outcome === "skipped") return `⏭️ ${label} (skipped)`;
+  if (outcome === "cancelled") return `⏹️ ${label} (cancelled)`;
+  return `❓ ${label} (${outcome || "unknown"})`;
 }
 
 function buildComment() {
@@ -68,6 +72,9 @@ function buildComment() {
   }
   if (ci.build === "failure") {
     ciFindings.push("* Build falhou no `frontend/` (`npx vite build`).");
+  }
+  if (ci.tests === "failure") {
+    ciFindings.push("* Tests falharam no `frontend/`.");
   }
 
   let body = `${MARKER}
@@ -95,7 +102,7 @@ ${ciFindings.join("\n")}
     body += `
 ## ✅ Checks passed
 
-Lint, typecheck e build ok (ou skipped). Isso não substitui o review do Copilot nem garante ausência de bugs.
+Lint, typecheck, tests e build ok (ou skipped). Isso não substitui o review do Copilot nem garante ausência de bugs.
 `;
   }
 
