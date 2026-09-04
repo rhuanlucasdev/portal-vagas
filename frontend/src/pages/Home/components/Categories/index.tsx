@@ -26,11 +26,11 @@ const featuredCategories: {
 const Categories = () => {
   return (
     <div>
-      <h2 className="mb-6 text-2xl font-bold text-slate-900">
+      <h2 className="mb-6 text-xl font-bold text-slate-900 md:text-2xl">
         Encontre por área
       </h2>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-2">
         {featuredCategories.map((category) => {
           const count = getJobCountByCategory(category.id);
           const Icon = category.icon;
@@ -39,7 +39,7 @@ const Categories = () => {
             <Link
               key={category.id}
               to={`/vagas?categoria=${category.id}`}
-              className="flex min-h-32 flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-100/80 px-4 py-6 text-center transition-all duration-300 hover:border-blue-900/30 hover:bg-slate-100"
+              className="flex min-h-24 flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-100/80 px-3 py-5 text-center transition-all duration-300 hover:border-blue-900/30 hover:bg-slate-100 md:min-h-32 md:px-4 md:py-6"
             >
               <Icon className="mb-2 h-6 w-6 text-blue-900" aria-hidden="true" />
               <span className="font-semibold text-blue-900">{category.title}</span>
@@ -52,7 +52,7 @@ const Categories = () => {
 
         <Link
           to="/vagas"
-          className="flex min-h-32 items-center justify-center rounded-xl border border-slate-200 bg-slate-100/80 px-4 py-6 text-center font-semibold text-blue-900 transition-all duration-300 hover:border-blue-900/30 hover:bg-slate-100"
+          className="flex min-h-24 items-center justify-center rounded-xl border border-slate-200 bg-slate-100/80 px-3 py-5 text-center font-semibold text-blue-900 transition-all duration-300 hover:border-blue-900/30 hover:bg-slate-100 md:min-h-32 md:px-4 md:py-6"
         >
           Ver todas as áreas
         </Link>

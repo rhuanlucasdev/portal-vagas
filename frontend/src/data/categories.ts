@@ -13,3 +13,7 @@ export const categories = [
 
 export type Category = (typeof categories)[number];
 export type CategoryId = Category["id"];
+
+export function isCategoryId(value: string): value is CategoryId {
+  return categories.some((category) => category.id === value);
+}
