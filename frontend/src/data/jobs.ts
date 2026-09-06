@@ -554,3 +554,8 @@ export function getCompanyInitials(company: string) {
 
   return initials || company.slice(0, 2).toUpperCase();
 }
+
+// TODO: Implementar verificação da empresa
+export function isCompanyVerified() {
+  return "Empresa Verificada - VagaSul";
+}
