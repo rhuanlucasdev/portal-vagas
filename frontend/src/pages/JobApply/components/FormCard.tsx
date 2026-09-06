@@ -41,6 +41,8 @@ const FormCard = ({
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // TODO: fechar dropdown de disponibilidade no clique fora e no Escape
+
   function maskPhone(phone: string) {
     const digits = phone.replace(/\D/g, "").slice(0, 11);
     if (digits.length <= 2) return digits.replace(/(\d{0,2})/, "($1");
@@ -265,6 +267,7 @@ const FormCard = ({
                   value="newFile"
                   className="mt-1"
                 />
+                {/* TODO: input type="file" + upload quando curriculumSource === "newFile" */}
                 <span className="flex min-w-0 flex-col gap-0.5">
                   <span className="text-sm font-medium text-slate-900">
                     Enviar novo arquivo

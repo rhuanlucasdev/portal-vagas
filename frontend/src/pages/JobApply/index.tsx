@@ -31,6 +31,7 @@ function fieldValue(data: FormData, key: string) {
 const JobApply = () => {
   const { id } = useParams();
   const job = getJobById(id ?? "");
+  // TODO: testes de JobApply (submit, erro de termos, modal de sucesso)
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -46,6 +47,7 @@ const JobApply = () => {
     setStatus("loading");
     setErrorMessage("");
 
+    // TODO: validação de campos (email, telefone, availability obrigatória) além do required HTML
     try {
       const result = await submitApplication({
         jobId: job.id,
@@ -183,6 +185,7 @@ const JobApply = () => {
                   </Link>
                   <button
                     type="button"
+                    // TODO: salvar rascunho (localStorage ou API)
                     className="flex cursor-pointer items-center justify-center gap-2 rounded-md px-2 py-1 text-xs text-slate-800 transition-colors hover:bg-slate-200 md:text-sm"
                   >
                     <CiBookmark

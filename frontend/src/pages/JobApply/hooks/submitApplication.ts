@@ -15,6 +15,7 @@ export type ApplicationPayload = {
 };
 
 export async function submitApplication(payload: ApplicationPayload) {
+  // TODO: trocar mock por POST real na API Nest
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   if (!payload.terms) {

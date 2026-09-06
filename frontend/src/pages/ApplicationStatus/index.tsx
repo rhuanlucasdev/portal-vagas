@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 /** Placeholder até existir o fluxo real de acompanhamento. */
+// TODO: página real de acompanhamento (status, histórico, contatos do RH)
 const ApplicationStatus = () => {
   const { id } = useParams();
   const protocol = id?.slice(0, 8).toUpperCase() ?? "—";
